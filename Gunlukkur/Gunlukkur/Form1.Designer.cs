@@ -101,6 +101,7 @@
             this.cBoxDovizTuru.Name = "cBoxDovizTuru";
             this.cBoxDovizTuru.Size = new System.Drawing.Size(67, 21);
             this.cBoxDovizTuru.TabIndex = 5;
+            this.cBoxDovizTuru.SelectedIndexChanged += new System.EventHandler(this.cBoxDovizTuru_SelectedIndexChanged);
             // 
             // label3
             // 

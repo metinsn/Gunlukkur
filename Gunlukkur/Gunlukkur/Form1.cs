@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -24,8 +17,10 @@ namespace Gunlukkur
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load("http://www.tcmb.gov.tr/kurlar/today.xml");
-            DateTime Tarih= Convert.ToDateTime(xmlDoc.SelectSingleNode("//Tarih_Date").Attributes["Tarih"].Value);
+            DateTime Tarih = Convert.ToDateTime(xmlDoc.SelectSingleNode("//Tarih_Date").Attributes["Tarih"].Value);
             label1.Text = Tarih.ToString("dd/MM/yyyy");
+
+            #region Kur_deger_getir
 
             if (cBoxDovizTuru.SelectedItem.ToString() == "Dolar" && !Dolardurum)
             {
@@ -46,11 +41,49 @@ namespace Gunlukkur
                 dGridKurlar.Rows.Add("Pound", GBP);
                 Pounddurum = true;
             }
-            
+
+
+            #endregion
+
         }
 
+        private void cBoxDovizTuru_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DgridTemizle();
+            if (cBoxDovizTuru.SelectedItem.ToString()== "Dolar")
+            {
+                Satirsec("Dolar");
+            }
+            if (cBoxDovizTuru.SelectedItem.ToString() == "Euro")
+            {
+                Satirsec("Euro");
+            }
+            if (cBoxDovizTuru.SelectedItem.ToString() == "Pound")
+            {
+                Satirsec("Pound");
+            }
 
 
+        }
+
+        public void DgridTemizle()
+        {
+            for (int i = 0; i < dGridKurlar.RowCount - 1; i++)
+            {
+                dGridKurlar.Rows[i].Selected = false;
+            }
+        }
+
+        private void Satirsec(string parabirimi)
+        {
+            for (int i = 0; i < dGridKurlar.RowCount - 1; i++)
+            {
+                if (dGridKurlar.Rows[i].Cells[0].Value.ToString() == parabirimi)
+                {
+                    dGridKurlar.Rows[i].Selected = true;
+                }
+            }
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
